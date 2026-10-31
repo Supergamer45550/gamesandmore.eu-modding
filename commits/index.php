@@ -1,16 +1,25 @@
 <?php
+date_default_timezone_set("Europe/Berlin");
+
 $dbPath = "/var/www/gamesandmore/modding/commits/db/commits.db";
 $db = new PDO("sqlite:" . $dbPath);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Fetch newest first
+
 $rows = $db->query("SELECT author, message, timestamp, url FROM commits ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 
 echo "<h1>Latest Commit</h1>";
 
 if (count($rows) > 0) {
     $latest = $rows[0];
-    $date = date("d M Y, H:i", strtotime($latest["timestamp"]));
+
+    try {
+        $dt = new DateTime($latest["timestamp"]);
+    } catch (Exception $e) {
+        $dt = new DateTime();
+    }
+
+    $date = $dt->format("d M Y, H:i (P)");
 
     echo "<div style='margin-bottom:20px; padding:10px; border:1px solid #ccc; border-radius:8px; background:#f9f9f9;'>";
     echo "<p><strong>Author:</strong> " . htmlspecialchars($latest["author"]) . "</p>";
@@ -24,13 +33,20 @@ if (count($rows) > 0) {
     echo "</div>";
 }
 
-// Separator bar
+
 echo "<h1>Earlier Commits</h1>";
 
-// Display older commits
+
 for ($i = 1; $i < count($rows); $i++) {
     $commit = $rows[$i];
-    $date = date("d M Y, H:i", strtotime($commit["timestamp"]));
+
+    try {
+        $dt = new DateTime($commit["timestamp"]);
+    } catch (Exception $e) {
+        $dt = new DateTime(); 
+    }
+
+    $date = $dt->format("d M Y, H:i (P)");
 
     echo "<div style='margin-bottom:20px; padding:10px; border:1px solid #ccc; border-radius:8px; background:#f9f9f9;'>";
     echo "<p><strong>Author:</strong> " . htmlspecialchars($commit["author"]) . "</p>";
