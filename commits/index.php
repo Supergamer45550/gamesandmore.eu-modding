@@ -4,18 +4,42 @@ $db = new PDO("sqlite:" . $dbPath);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Fetch newest first
-$rows = $db->query("SELECT author, message, timestamp FROM commits ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+$rows = $db->query("SELECT author, message, timestamp, url FROM commits ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 
-echo "<h1>Latest Commits</h1>";
+echo "<h1>Latest Commit</h1>";
 
-foreach ($rows as $commit) {
+if (count($rows) > 0) {
+    $latest = $rows[0];
+    $date = date("d M Y, H:i", strtotime($latest["timestamp"]));
+
+    echo "<div style='margin-bottom:20px; padding:10px; border:1px solid #ccc; border-radius:8px; background:#f9f9f9;'>";
+    echo "<p><strong>Author:</strong> " . htmlspecialchars($latest["author"]) . "</p>";
+    echo "<p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($latest["message"])) . "</p>";
+    echo "<p><strong>Date:</strong> " . $date . "</p>";
+
+    if (!empty($latest["url"])) {
+        echo "<p><a href='" . htmlspecialchars($latest["url"]) . "' target='_blank'>View on GitHub</a></p>";
+    }
+
+    echo "</div>";
+}
+
+// Separator bar
+echo "<h1>Earlier Commits</h1>";
+
+// Display older commits
+for ($i = 1; $i < count($rows); $i++) {
+    $commit = $rows[$i];
     $date = date("d M Y, H:i", strtotime($commit["timestamp"]));
 
     echo "<div style='margin-bottom:20px; padding:10px; border:1px solid #ccc; border-radius:8px; background:#f9f9f9;'>";
-
     echo "<p><strong>Author:</strong> " . htmlspecialchars($commit["author"]) . "</p>";
     echo "<p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($commit["message"])) . "</p>";
     echo "<p><strong>Date:</strong> " . $date . "</p>";
+
+    if (!empty($commit["url"])) {
+        echo "<p><a href='" . htmlspecialchars($commit["url"]) . "' target='_blank'>View on GitHub</a></p>";
+    }
 
     echo "</div>";
 }
