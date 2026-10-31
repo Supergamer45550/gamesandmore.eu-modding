@@ -1,17 +1,24 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 .layout {
     display: flex;
-    min-height: 100vh;
+    min-height: 100vh; 
     background: #f5f5f5;
     font-family: sans-serif;
 }
 
+
 .sidebar {
-    width: 260px;               
-    background: #1e1e1e;        
+    width: 260px;
+    background: #1e1e1e;
     color: #fff;
     padding: 20px;
     box-sizing: border-box;
-    position: sticky;           
+    position: sticky;
     top: 0;
     height: 100vh;
     overflow-y: auto;
@@ -34,7 +41,7 @@
     padding: 6px 4px;
     display: block;
     border-radius: 4px;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.25s;
 }
 
 .sidebar nav ul li a:hover {
@@ -42,12 +49,28 @@
     color: #fff;
 }
 
+.sidebar nav ul li a.active {
+    color: crimson;
+}
+
 
 .content {
     flex: 1;
     padding: 40px;
     box-sizing: border-box;
-    max-width: 900px;     
+
+    background: rgb(173, 172, 175);
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.content-inner {
+    max-width: 900px;
 }
 
 
@@ -59,8 +82,9 @@
 
 .content p {
     line-height: 1.6;
-    color: #444; 
+    color: #444;
 }
+
 
 @media (max-width: 800px) {
     .layout {
