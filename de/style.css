@@ -101,6 +101,15 @@ html, body {
     font-size: 20px;
 }
 
+.content z.hervorgehobenrot {
+    color: red;
+    background: rgb(105, 105, 107);
+    padding: 2px;
+    border: 1px solid black ;
+    border-radius: 12px;
+    font-size: 20px;
+}
+
 
 @media (max-width: 800px) {
     .layout {
