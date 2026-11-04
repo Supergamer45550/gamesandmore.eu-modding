@@ -92,6 +92,21 @@ html, body {
     font-size: 20px;
 }
 
+.content p.w {
+    line-height: 1.6;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.content section.redbox {
+    line-height: 1.6;
+    color: #ffffff;
+    font-size: 20px;
+    background-color: darkred;
+    border: 2px solid red;
+    border-radius: 12px;
+}
+
 .content z.hervorgehoben {
     color: aqua;
     background: rgb(105, 105, 107);
@@ -109,7 +124,6 @@ html, body {
     border-radius: 12px;
     font-size: 20px;
 }
-
 
 @media (max-width: 800px) {
     .layout {
